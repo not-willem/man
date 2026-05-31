@@ -57,8 +57,19 @@
         let isGrounded = false;
         let eggnum = 1;
         let energy = 109;
+        let isGameOver = false; 
         const eggs = [];
+
+        function gaemoger() {
+            isGameOver = true;
+            alert("oh no game over! your score was " + eggnum);
+            energy = 122;
+            document.body.innerHTML = '';
+            document.body.style.backgroundImage = "url('gmaeopver.png')";
+        }
+
         document.addEventListener("keydown", (event) => {
+            if (isGameOver) return;
             if (event.key === "ArrowUp" && isGrounded) {
                 Yspeed = jumpStrength;
                 isGrounded = false;
@@ -70,12 +81,16 @@
                 Xspeed = 0 - sppedd;
             }
         });
+
         document.addEventListener("keyup", (event) => {
             if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
                 Xspeed = 0;
             }
         });
+
         function moveman() {
+            if (isGameOver) return;
+
             if (!isGrounded) {
                 Yspeed += gravity;
             }
@@ -98,6 +113,12 @@
                 manman.style.top = ypos + "px";
                 manman.style.left = xpos + "px";
             }
+
+            if (energy < 1) {
+                gaemoger();
+                return;
+            }
+
             eggs.forEach((egg) => {
                 egg.yspeed += 0.4;
                 egg.y += egg.yspeed;
@@ -123,10 +144,13 @@
         }
         moveman();
         document.addEventListener('click', function(event) {
-            eggnum ++;
-            const engnene = document.getElementById("theengery")
-            engnene.innerText = "energy: " + energy;
+            if (isGameOver) return; 
 
+            eggnum ++;
+            const engnene = document.getElementById("theengery");
+            if (engnene) {
+                engnene.innerText = "energy: " + energy;
+            }
             const mouseX = event.pageX;
             const mouseY = event.pageY;
             if (mouseY > 25) {
@@ -141,8 +165,10 @@
                     x: mouseX,
                     yspeed: 0
                 });
-            
                 energy = energy - 4;
+                if (engnene) {
+                    engnene.innerText = "energy: " + energy;
+                }
             }
         });
     </script>
