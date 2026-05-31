@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>man</title>
+    <style>
+        body {
+            background-image: url(background.jpg);
+
+        }
+        .egg {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url("egg.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+    <img src="man.bmp" id="sdfsdf" style="position: relative;">
+
+    <script>
+        let viewportBottomEdge = window.innerHeight;
+        let viewportRightEdge = window.innerWidth;
+        let maxYforlittleman = viewportBottomEdge - 210;
+        let maxXforlittleman = viewportRightEdge - 160;
+        let manman = document.getElementById("sdfsdf");
+        
+        let ypos = 1;
+        let xpos = 1;
+        let Yspeed = 0;
+        let Xspeed = 0;
+        let gravity = 0.2;
+        let jumpStrength = -10;
+        let sppedd = 5;
+        let isGrounded = false;
+        
+        const eggs = [];
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp" && isGrounded) {
+                Yspeed = jumpStrength;
+                isGrounded = false;
+            }
+            if (event.key === "ArrowRight") {
+                Xspeed = sppedd;
+            }
+            if (event.key === "ArrowLeft") {
+                Xspeed = 0 - sppedd;
+            }
+        });
+
+        document.addEventListener("keyup", (event) => {
+            if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+                Xspeed = 0;
+            }
+        });
+
+        function moveman() {
+            if (!isGrounded) {
+                Yspeed += gravity;
+            }
+            ypos += Yspeed;
+            if (ypos >= maxYforlittleman) {
+                ypos = maxYforlittleman;
+                Yspeed = 0;
+                isGrounded = true;
+            }
+            xpos += Xspeed;
+            if (xpos >= maxXforlittleman) {
+                xpos = maxXforlittleman;
+                Xspeed = 0;
+            }
+            if (xpos <= 0) {
+                xpos = 0;
+                Xspeed = 0;
+            }
+            if (manman) {
+                manman.style.top = ypos + "px";
+                manman.style.left = xpos + "px";
+            }
+
+            eggs.forEach((egg) => {
+                egg.yspeed += 0.4;
+                egg.y += egg.yspeed;
+
+                let eggFloor = window.innerHeight - 25;
+                if (egg.y >= eggFloor) {
+                    egg.y = eggFloor;
+                    egg.yspeed = 0; 
+                }
+
+                egg.element.style.top = egg.y + "px";
+            });
+
+            requestAnimationFrame(moveman);
+        }
+        
+        moveman();
+
+        document.addEventListener('click', function(event) {
+            const mouseX = event.pageX;
+            const mouseY = event.pageY;
+            
+            const newBox = document.createElement('div');
+            newBox.classList.add('egg');
+            newBox.style.left = mouseX + 'px';
+            newBox.style.top = mouseY + 'px';
+            document.body.appendChild(newBox);
+
+            eggs.push({
+                element: newBox,
+                y: mouseY,
+                yspeed: 0
+            });
+        });
+    </script>
+</body>
+</html>
