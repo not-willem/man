@@ -1,13 +1,7 @@
-man
+# man
 
-man is man
+this is mostly a joke game but its still kinda fun to play anyway
 
-the 
+i built it using HTML, CSS and JS and its about a man who stacks eggshells and drinks pickle falvoured water to get energy to keep building
 
-man
-
-we
-
-then i
-
-he
+lol idk
