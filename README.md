@@ -6,6 +6,6 @@ i built it using HTML, CSS and JS and its about a man who stacks eggshells and d
 
 lol idk
 
-check it out and play it here: [https://not-willem.github.io/man/](gamee)
+check it out and play it here: [gamee]((https://not-willem.github.io/man/)
 
 use arrow keys to move and click to place eggshells
